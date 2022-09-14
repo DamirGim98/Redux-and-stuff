@@ -1,9 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import { legacy_createStore, compose, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { rootReducer } from "./redux/rootReducer";
+import { Provider } from "react-redux";
+import {spamFilter} from "./redux/middleware";
+import "./index.css";
+import App from "./App";
+
+const store = legacy_createStore(rootReducer, compose(applyMiddleware(thunk, spamFilter)));
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
 );
